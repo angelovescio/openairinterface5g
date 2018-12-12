@@ -175,7 +175,7 @@ set(CMAKE_C_FLAGS
 set(CMAKE_CXX_FLAGS
   "${CMAKE_CXX_FLAGS} ${C_FLAGS_PROCESSOR} -std=c++11 -D'MAKE_VERSION(a,b,c)=((a)*256+(b)*16+c)'"
 )
-add_definitions("-DASN_DISABLE_OER_SUPPORT")
+#add_definitions("-DASN_DISABLE_OER_SUPPORT")
 
 
 #########################
@@ -317,9 +317,9 @@ elseif (${RRC_ASN1_VERSION} STREQUAL "Rel15")
 endif  (${RRC_ASN1_VERSION} STREQUAL "Rel8")
 add_definitions(-DLTE_RRC_VERSION=${LTE_RRC_VERSION})
 set (RRC_FULL_DIR ${asn1_generated_dir}/RRC_${RRC_ASN1_VERSION})
-message("calling ASN1C_PREFIX=LTE_ asn1c -pdu=all -fcompound-names -gen-PER -no-gen-OER -no-gen-example -D ${RRC_FULL_DIR} ${RRC_GRAMMAR}")
+message("calling ASN1C_PREFIX=LTE_ asn1c -pdu=all -fcompound-names -gen-PER -gen-OER -no-gen-example -D ${RRC_FULL_DIR} ${RRC_GRAMMAR}")
 execute_process(COMMAND mkdir -p ${RRC_FULL_DIR}
-                COMMAND env "ASN1C_PREFIX=LTE_" asn1c -pdu=all -fcompound-names -gen-PER -no-gen-OER -no-gen-example -D ${RRC_FULL_DIR} ${RRC_GRAMMAR}
+                COMMAND env "ASN1C_PREFIX=LTE_" asn1c -pdu=all -fcompound-names -gen-PER -gen-OER -no-gen-example -D ${RRC_FULL_DIR} ${RRC_GRAMMAR}
                 RESULT_VARIABLE ret)
 if (NOT ${ret} STREQUAL 0)
   message(FATAL_ERROR "${ret}: error")
@@ -339,7 +339,7 @@ include_directories ("${RRC_FULL_DIR}")
 add_custom_command (
   OUTPUT ${RRC_FULL_DIR}/asn_constant.h
   COMMAND mkdir -p ${RRC_FULL_DIR}
-  COMMAND env "ASN1C_PREFIX=LTE_" asn1c -pdu=all -fcompound-names -gen-PER -no-gen-OER -no-gen-example -D ${RRC_FULL_DIR} ${RRC_GRAMMAR}
+  COMMAND env "ASN1C_PREFIX=LTE_" asn1c -pdu=all -fcompound-names -gen-PER -gen-OER -no-gen-example -D ${RRC_FULL_DIR} ${RRC_GRAMMAR}
   DEPENDS ${RRC_GRAMMAR}
   )
 
@@ -378,9 +378,9 @@ endif(${S1AP_RELEASE} STREQUAL "R8")
 add_definitions(-DS1AP_VERSION=${S1AP_VERSION})
 set(S1AP_ASN_DIR ${S1AP_DIR}/MESSAGES/ASN1/${S1AP_RELEASE})
 set(S1AP_C_DIR ${asn1_generated_dir}/S1AP_${S1AP_RELEASE})
-message("calling ASN1C_PREFIX=S1AP_ asn1c -pdu=all -fcompound-names -fno-include-deps -gen-PER -no-gen-OER -no-gen-example -D ${S1AP_C_DIR} ${S1AP_ASN_DIR}/${S1AP_ASN_FILES}")
+message("calling ASN1C_PREFIX=S1AP_ asn1c -pdu=all -fcompound-names -fno-include-deps -gen-PER -gen-OER -no-gen-example -D ${S1AP_C_DIR} ${S1AP_ASN_DIR}/${S1AP_ASN_FILES}")
 execute_process(COMMAND mkdir -p ${S1AP_C_DIR}
-                COMMAND env "ASN1C_PREFIX=S1AP_" asn1c -pdu=all -fcompound-names -fno-include-deps -gen-PER -no-gen-OER -no-gen-example -D ${S1AP_C_DIR} ${S1AP_ASN_DIR}/${S1AP_ASN_FILES}
+                COMMAND env "ASN1C_PREFIX=S1AP_" asn1c -pdu=all -fcompound-names -fno-include-deps -gen-PER -gen-OER -no-gen-example -D ${S1AP_C_DIR} ${S1AP_ASN_DIR}/${S1AP_ASN_FILES}
                 RESULT_VARIABLE ret)
 if (NOT ${ret} STREQUAL 0)
   message(FATAL_ERROR "${ret}: error")
@@ -393,7 +393,7 @@ set(s1ap_h ${s1ap_h})
 add_custom_command (
   OUTPUT ${S1AP_C_DIR}/S1AP_asn_constant.h
   COMMAND mkdir -p ${S1AP_C_DIR}
-  COMMAND env "ASN1C_PREFIX=S1AP_" asn1c -pdu=all -fcompound-names -fno-include-deps -gen-PER -no-gen-OER -no-gen-example -D ${S1AP_C_DIR} ${S1AP_ASN_DIR}/${S1AP_ASN_FILES}
+  COMMAND env "ASN1C_PREFIX=S1AP_" asn1c -pdu=all -fcompound-names -fno-include-deps -gen-PER -gen-OER -no-gen-example -D ${S1AP_C_DIR} ${S1AP_ASN_DIR}/${S1AP_ASN_FILES}
   DEPENDS ${S1AP_ASN_DIR}/${S1AP_ASN_FILES}
 )
 add_library(S1AP_LIB
@@ -445,9 +445,9 @@ endif(${X2AP_RELEASE} STREQUAL "R8")
 add_definitions(-DX2AP_VERSION=${X2AP_VERSION})
 set(X2AP_ASN_DIR ${X2AP_DIR}/MESSAGES/ASN1/${X2AP_RELEASE})
 set(X2AP_C_DIR ${asn1_generated_dir}/X2AP_${X2AP_RELEASE})
-message("calling ASN1C_PREFIX=X2AP_ asn1c -pdu=all -fcompound-names -fno-include-deps -gen-PER -no-gen-OER -no-gen-example -D ${X2AP_C_DIR} ${X2AP_ASN_DIR}/${X2AP_ASN_FILES}")
+message("calling ASN1C_PREFIX=X2AP_ asn1c -pdu=all -fcompound-names -fno-include-deps -gen-PER -gen-OER -no-gen-example -D ${X2AP_C_DIR} ${X2AP_ASN_DIR}/${X2AP_ASN_FILES}")
 execute_process(COMMAND mkdir -p ${X2AP_C_DIR}
-                COMMAND env "ASN1C_PREFIX=X2AP_" asn1c -pdu=all -fcompound-names -fno-include-deps -gen-PER -no-gen-OER -no-gen-example -D ${X2AP_C_DIR} ${X2AP_ASN_DIR}/${X2AP_ASN_FILES}
+                COMMAND env "ASN1C_PREFIX=X2AP_" asn1c -pdu=all -fcompound-names -fno-include-deps -gen-PER -gen-OER -no-gen-example -D ${X2AP_C_DIR} ${X2AP_ASN_DIR}/${X2AP_ASN_FILES}
                 RESULT_VARIABLE ret)
 if (NOT ${ret} STREQUAL 0)
   message(FATAL_ERROR "${ret}: error")
@@ -460,7 +460,7 @@ set(x2ap_h ${x2ap_h})
 add_custom_command (
   OUTPUT ${X2AP_C_DIR}/X2AP_asn_constant.h
   COMMAND mkdir -p ${X2AP_C_DIR}
-  COMMAND env "ASN1C_PREFIX=X2AP_" asn1c -pdu=all -fcompound-names -fno-include-deps -gen-PER -no-gen-OER -no-gen-example -D ${X2AP_C_DIR} ${X2AP_ASN_DIR}/${X2AP_ASN_FILES}
+  COMMAND env "ASN1C_PREFIX=X2AP_" asn1c -pdu=all -fcompound-names -fno-include-deps -gen-PER -gen-OER -no-gen-example -D ${X2AP_C_DIR} ${X2AP_ASN_DIR}/${X2AP_ASN_FILES}
   DEPENDS ${X2AP_ASN_DIR}/${X2AP_ASN_FILES}
   )
 
