@@ -1084,7 +1084,7 @@ int device_init(openair0_device *device, openair0_config_t *openair0_cfg) {
     brf_error(status);
   } else 
     printf("[BRF] TX module enabled \n");
- 
+sleep(5); 
  /* We must always enable the RX module after calling bladerf_sync_config(), and 
     * before  attempting to RX samples via  bladerf_sync_rx(). */
   if ((status=bladerf_enable_module(brf->dev, BLADERF_MODULE_RX, true)) != 0) {
@@ -1092,7 +1092,7 @@ int device_init(openair0_device *device, openair0_config_t *openair0_cfg) {
     brf_error(status);
   }else 
     printf("[BRF] RX module enabled \n");
-
+sleep(5);
   // calibrate 
     
   if ((status=bladerf_calibrate_dc(brf->dev, BLADERF_DC_CAL_LPF_TUNING)) != 0 ||
